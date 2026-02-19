@@ -1,19 +1,18 @@
 import axios from 'axios';
 
-const API_KEY = import.meta.env.VITE_WEATHERSTACK_API_KEY;
-const BASE_URL = 'http://api.weatherstack.com';
+const BASE_URL = '/api/weather';
 
 const weatherClient = axios.create({
   baseURL: BASE_URL,
-  params: {
-    access_key: API_KEY,
-  },
 });
 
 export const getCurrentWeather = async (query) => {
   try {
-    const response = await weatherClient.get('/current', {
-      params: { query },
+    const response = await weatherClient.get('', {
+      params: {
+        query,
+        endpoint: 'current'
+      },
     });
     return response.data;
   } catch (error) {
@@ -24,9 +23,12 @@ export const getCurrentWeather = async (query) => {
 
 export const getHistoricalWeather = async (query, date) => {
   try {
-    // date format: YYYY-MM-DD
-    const response = await weatherClient.get('/historical', {
-      params: { query, historical_date: date },
+    const response = await weatherClient.get('', {
+      params: {
+        query,
+        endpoint: 'historical',
+        historical_date: date
+      },
     });
     return response.data;
   } catch (error) {
@@ -37,8 +39,11 @@ export const getHistoricalWeather = async (query, date) => {
 
 export const getMarineWeather = async (query) => {
   try {
-    const response = await weatherClient.get('/marine', {
-      params: { query },
+    const response = await weatherClient.get('', {
+      params: {
+        query,
+        endpoint: 'marine'
+      },
     });
     return response.data;
   } catch (error) {
